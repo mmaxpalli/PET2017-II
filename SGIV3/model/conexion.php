@@ -9,9 +9,9 @@
 
 		public function __construct(){
 			$this->servidor   = "localhost";
-			$this->usuario	  = "sistemas_usuario";
-			$this->contraseña = "Password123+++";
-			$this->basedatos  = "sistemas_bdincidencias";
+			$this->usuario	  = "root";
+			$this->contraseña = "";
+			$this->basedatos  = "bd_incidencias";
 		
 		}
 

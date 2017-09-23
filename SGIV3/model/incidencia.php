@@ -1,17 +1,5 @@
 <?php
 session_start();
-/************************************************************************************************
-* Descripción			: Creacion de la Incidencias areas donde se definen atributos y metodos *
-* Fecha Creación		: 4/08/2017                                         					*
-* Fecha Modificación	: 13/08/2017  															*		
-* Parámetros			: 																		*
-* Autor					: Max Palli Uscamaita													*
-* Versión				: 1.0																	*
-* Cambios Importantes	:                                                         				*
-*                                                                             					*                                        		
-*                                                                             					*
-************************************************************************************************/
-
 class incidencia
 {
 	
@@ -43,16 +31,7 @@ public $TRIN_Id;
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion Obtener							*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: id: Recibe el id de la clase incidencia														*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
+
 
 	public function Obtener($id)
 	{
@@ -81,16 +60,6 @@ public $TRIN_Id;
 	}
 
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion ObtenerTratamiento					*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: id: Recibe el id de la clase tratamiento_incidencia		*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
 	public function ObtenerTratamiento($id)
 	{
 		try 
@@ -122,16 +91,6 @@ public $TRIN_Id;
 	}
 	
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion Registrar							*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: id: Recibe un objeto data de tipo clase incidencia		*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
 
 	public function Registrar(incidencia $data)
 	{
@@ -178,16 +137,6 @@ public $TRIN_Id;
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion Listar								*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: 															*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
 
 	public function Listar()
 	{
@@ -236,16 +185,7 @@ public $TRIN_Id;
 				}
 			}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion SelectCategorias					*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: 															*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
+
 			public function SelectCategorias()
 			{
 				try
@@ -267,16 +207,6 @@ public $TRIN_Id;
 			}
 
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion SelectRol							*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: 															*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
 
 public function SelectRol()
 	{
@@ -298,16 +228,6 @@ public function SelectRol()
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion SelectNivel						*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: 															*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
 
 	public function SelectNivel()
 	{
@@ -330,16 +250,7 @@ public function SelectRol()
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion SelectTrabajadores					*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: 															*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
+
 
 	public function SelectTrabajadores()
 	{
@@ -364,16 +275,7 @@ public function SelectRol()
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion ListaIncidenciasRegistradas		*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: 															*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
+
 
 	public function ListaIncidenciasRegistradas()
 	{
@@ -398,19 +300,8 @@ public function SelectRol()
 			die($e->getMessage());
 		}
 	}
-	
-/************************************************************************************
-* Descripción			: Creacion de la Funcion Actualizar							*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: data: Recibe un objeto de tipo clase incidencias														*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
 
-public function Actualizar($data)
+			public function Actualizar($data)
 
 				{
 
@@ -440,16 +331,7 @@ public function Actualizar($data)
 					}
 				}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion ActualizarEscalado							*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: data: Recibe un objeto de tipo clase incidencias														*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
+
 				public function ActualizarEscalado($data)
 
 				{
@@ -481,16 +363,7 @@ public function Actualizar($data)
 					}
 				}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion ListaIncidenciasEscalado			*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: 															*
-* Autor					:  Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                           		*
-*************************************************************************************/
+
 
 	public function ListaIncidenciasEscalado()
 		{

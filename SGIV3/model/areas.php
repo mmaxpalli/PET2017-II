@@ -1,20 +1,8 @@
 <?php
-
 if(!isset($_SESSION)) 
     { 
         session_start(); 
     }
-/************************************************************************************
-* Descripción			: Creacion de la Clase areas donde se definen atributos y metodos *
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			:															*
-* Autor					: Jesus Mendoza Huillca - Max Palli Uscamaita				*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		
-*                                                                             		*
-*************************************************************************************/
 class areas
 {
 	
@@ -40,17 +28,6 @@ public $AREA_FechaAuditoria;
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la Funcion SelectAreas						*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			:															*
-* Autor					: Jesus Mendoza Huillca - Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		
-*                                                                             		*
-*************************************************************************************/
 
 public function SelectAreas()
 	{
@@ -73,17 +50,7 @@ public function SelectAreas()
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la funcion ListarAreas						*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			:															*
-* Autor					: Jesus Mendoza Huillca - Max Palli Uscamaita										*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		
-*                                                                             		*
-*************************************************************************************/
+
 	public function ListarAreas()
 	{
 		try
@@ -104,17 +71,7 @@ public function SelectAreas()
 			die($e->getMessage());
 		}
 	}
-/************************************************************************************
-* Descripción			: Creacion de la funcion Obtener 							*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			:id :Recibe el id de la clase areas					*
-* Autor					: Jesus Mendoza Huillca - Max Palli Uscamaita				*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		
-*                                                                             		*
-*************************************************************************************/
+
 	public function Obtener($id)
 	{
 		try 
@@ -134,17 +91,7 @@ public function SelectAreas()
 		}
 	}
 
-/************************************************************************************
-* Descripción			: Creacion de la funcion Actualizar							*
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: data: Representa un objeto de tipo Areas 					*
-* Autor					: Jesus Mendoza Huillca - Max Palli Uscamaita				*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		
-*                                                                             		*
-*************************************************************************************/
+
 		public function Actualizar($data)
 
 				{
@@ -176,16 +123,7 @@ public function SelectAreas()
 					}
 				}
 
-/************************************************************************************
-* Descripción			: Creacion de la funcion Registrar					        *
-* Fecha Creación		: 4/08/2017                                         		*
-* Fecha Modificación	: 13/08/2017  												*		
-* Parámetros			: data: Recibe un objeto de tipo Areas 						*
-* Autor					: Jesus Mendoza Huillca - Max Palli Uscamaita				*
-* Versión				: 1.0														*
-* Cambios Importantes	:                                                         	*
-*                                                                             		*                                        		                                                                            		*
-*************************************************************************************/
+
 	public function Registrar(areas $data)
 		{
 			try 

@@ -1,17 +1,5 @@
 <?php
 session_start();
-/***************************************************************************************************
-* Descripción			: Creacion clase categoria donde se definen atributos y funciones  		   *
-* Fecha Creación		: 4/08/2017                                         					   *
-* Fecha Modificación	: 13/08/2017  															   *		
-* Parámetros			:																		   *
-* Autor					: Jesus Mendoza Huillca							   						   *
-* Versión				: 1.0																	   *
-* Cambios Importantes	:                                                         				   *
-*                                                                             					   *                                        		
-*                                                                             					   *
-***************************************************************************************************/
-
 class categoria
 {
 	
