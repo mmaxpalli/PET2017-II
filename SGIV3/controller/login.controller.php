@@ -87,7 +87,7 @@ class LoginController{
 
                  endforeach;
 
-               //header('Location:?c=gene_cliente');
+               header('Location:?c=gene_cliente');
             }
        else{
                // header('Location:index.php?c=login');
