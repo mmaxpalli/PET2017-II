@@ -2,6 +2,18 @@
 require_once 'model/categoria.php';
 require_once 'model/herramientas.php';
 
+/***************************************************************************************************
+* Descripción			: Creacion clase categoriaController donde se definen las funciones 	   *
+* Fecha Creación		: 4/08/2017                                         					   *
+* Fecha Modificación	: 13/08/2017  															   *		
+* Parámetros			:																		   *
+* Autor					: Max Palli Uscamaita							   						   *
+* Versión				: 1.0																	   *
+* Cambios Importantes	:                                                         				   *
+*                                                                             					   *                                        		
+*                                                                             					   *
+***************************************************************************************************/
+
 class categoriaController{
     
     private $model;

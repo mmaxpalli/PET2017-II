@@ -3,6 +3,17 @@ require_once 'model/incidencia.php';
 require_once 'model/herramientas.php';
 require_once 'model/areas.php';
 
+/************************************************************************************************
+* Descripción			: Creacion de la clase incidenciaController donde se definen las funciones *
+* Fecha Creación		: 4/08/2017                                         					*
+* Fecha Modificación	: 13/08/2017  															*		
+* Parámetros			: 																		*
+* Autor					: Max Palli Uscamaita													*
+* Versión				: 1.0																	*
+* Cambios Importantes	:                                                         				*
+*                                                                             					*                                        		
+*                                                                             					*
+************************************************************************************************/
 class incidenciaController{
     
     private $model;
