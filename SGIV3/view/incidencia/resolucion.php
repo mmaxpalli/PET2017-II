@@ -2,13 +2,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          Escalado de incidencias
+          Resolucion de incidencias
         <small>Incidencias registradas</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Mis incidencias </a></li>
         <li><a href="#">Maestros</a></li>
-        <li class="active">Escalar incidencias</li>
+        <li class="active">Resolucion incidencias</li>
       </ol>
     </section>
 
@@ -18,7 +18,7 @@
       <!-- Default box -->
       <div class="box">
             <div class="box-header with-border">
-               <h3 class="box-title">Escalar incidencias</h3>
+               <h3 class="box-title">Mis incidencias asiganadas</h3>
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>
@@ -63,24 +63,22 @@
                     <tr>
                         <th>Codigo</th>
                         <th>Titulo</th>
-                        <th>Descripcion</th> 
-                        <th>Area</th>   
-                        <th>Nivel</th>   
-                        <th>Usuario</th>   
+                        <th>Categoria</th> 
+                        <th>Prioridad</th>   
+                        <th>Responsable</th> 
                         <th></th> 
                    </tr>
                 </thead>
                 <tbody>
-                  <?php foreach($this->model->ListaIncidenciasEscalado() as $r): ?>
+                  <?php foreach($this->model->ListaIncidenciasPorResponsable() as $r): ?>
                     <tr>
                  
                       <td><?php echo $r->TRIN_Id; ?></td>
                       <td><?php echo $r->INCI_Titulo; ?></td>
                       <td><?php echo $r->CATE_Descripcion; ?></td> 
-                      <td><?php echo $r->AREA_Nombre; ?></td>
-                      <td><?php echo $r->NIVE_Nombre; ?></td>  
-                      <td><?php echo $r->USUA_Nombre; ?></td>                          
-                      <td> <a href="?c=escalar&a=Crud&Id=<?php echo $r->TRIN_Id; ?>" data-toggle="tooltip" title="Editar" class="btn btn-social-icon btn-info btn-sm" ><i class="fa fa-fw fa-edit" ></i></a>  </td>
+                      <td><?php echo $r->Prioridad; ?></td>
+                      <td><?php echo $r->USUA_Nombre; ?></td>                                                
+                      <td> <a href="?c=resolucion&a=Crud&Id=<?php echo $r->TRIN_Id; ?>" data-toggle="tooltip" title="Editar" class="btn btn-social-icon btn-info btn-sm" ><i class="fa fa-fw fa-edit" ></i></a>  </td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>

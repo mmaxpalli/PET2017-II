@@ -2,13 +2,13 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          Escalado de incidencias
-        <small>Incidencias registradas</small>
+         Aprobar/Rechazar incidencias
+        <small>Incidencias recibidas</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Mis incidencias </a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Mis incidencias</a></li>
         <li><a href="#">Maestros</a></li>
-        <li class="active">Escalar incidencias</li>
+        <li class="active">Mis incidencias</li>
       </ol>
     </section>
 
@@ -18,7 +18,7 @@
       <!-- Default box -->
       <div class="box">
             <div class="box-header with-border">
-               <h3 class="box-title">Escalar incidencias</h3>
+               <h3 class="box-title">Lista de incidencias enviadas</h3>
                 <div class="box-tools pull-right">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
                     <i class="fa fa-minus"></i></button>
@@ -37,7 +37,7 @@
                           if(isset($_SESSION['TipoVentanaEmergente'])){
                             if($_SESSION['TipoVentanaEmergente']=="success"){
                               $titulo="Exito";
-                              $alerta="Registro insertado con exito";
+                              $alerta="Operacion realizada con exito";
                             }
                             else if( $_SESSION['TipoVentanaEmergente']=="fail"){
                               $titulo="Error";
@@ -53,7 +53,12 @@
                             $titulo="";
                             $alerta="";
                           }
-                        unset($_SESSION['TipoVentanaEmergente']); ?>                
+                        unset($_SESSION['TipoVentanaEmergente']); ?>
+                  
+
+                    
+                  
+                
              
                   <br>
               </div>
@@ -63,24 +68,22 @@
                     <tr>
                         <th>Codigo</th>
                         <th>Titulo</th>
-                        <th>Descripcion</th> 
-                        <th>Area</th>   
-                        <th>Nivel</th>   
-                        <th>Usuario</th>   
+                        <th>F. Registro</th>
+                        <th>Categoria</th>
+                        <th>Estado</th>   
                         <th></th> 
                    </tr>
                 </thead>
                 <tbody>
-                  <?php foreach($this->model->ListaIncidenciasEscalado() as $r): ?>
+                  <?php foreach($this->model->ListaIncidenciasEnviadas() as $r): ?>
                     <tr>
                  
-                      <td><?php echo $r->TRIN_Id; ?></td>
+                      <td><?php echo $r->INCI_Id; ?></td>
                       <td><?php echo $r->INCI_Titulo; ?></td>
-                      <td><?php echo $r->CATE_Descripcion; ?></td> 
-                      <td><?php echo $r->AREA_Nombre; ?></td>
-                      <td><?php echo $r->NIVE_Nombre; ?></td>  
-                      <td><?php echo $r->USUA_Nombre; ?></td>                          
-                      <td> <a href="?c=escalar&a=Crud&Id=<?php echo $r->TRIN_Id; ?>" data-toggle="tooltip" title="Editar" class="btn btn-social-icon btn-info btn-sm" ><i class="fa fa-fw fa-edit" ></i></a>  </td>
+                      <td><?php echo $r->INCI_FechaRegistro; ?></td>   
+                      <td><?php echo $r->CATE_Descripcion; ?></td>                          
+                      <td>Enviado</td>
+                      <td> <a href="?c=aprobarrechazar_incidencia&a=Crud&Id=<?php echo $r->INCI_Id; ?>" data-toggle="tooltip" title="Aprobar/Rechazar" class="btn btn-social-icon btn-info btn-sm" ><i class="fa fa-fw fa-retweet " ></i></a>  </td>
                     </tr>
                   <?php endforeach; ?>
                 </tbody>
