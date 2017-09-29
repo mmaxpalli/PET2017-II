@@ -1,8 +1,5 @@
 <?php
-if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    }
+session_start();
 /************************************************************************************************
 * Descripción			: Creacion de la Incidencias areas donde se definen atributos y metodos *
 * Fecha Creación		: 4/08/2017                                         					*
@@ -15,7 +12,7 @@ if(!isset($_SESSION))
 *                                                                             					*
 ************************************************************************************************/
 
-class incidencia
+class cierre
 {
 	
 
@@ -33,6 +30,13 @@ public $AREA_Id;
 public $CATE_Id; 
 public $NIVE_Id; 
 public $TRIN_Id;
+
+public $TRIN_FechaRegistro;
+public $PRIO_Id;
+public $USUA_IdResponsable;
+public $TRIN_FechaAuditoria;
+
+
 
 	public function __CONSTRUCT()
 	{
@@ -68,6 +72,7 @@ public $TRIN_Id;
 								    INCI_Descripcion,
 								    INCI_FechaRegistro,
 								    CATE_Id,
+                                    AREA_Id,
 								    ESTA_Id,
 								    USUA_Id,
 								    USUA_IdAuditoria,
@@ -136,20 +141,24 @@ public $TRIN_Id;
 *                                                                             		*                                        		                                                                           		*
 *************************************************************************************/
 
-	public function Registrar(incidencia $data)
+	public function Registrar(aprobarrechazar_incidencia $data)
 	{
 		try 
 		{
-		$sql = "INSERT INTO incidencias(
-						INCI_Titulo, 
-						INCI_Descripcion, 
-						INCI_FechaRegistro,
-						CATE_Id,
-						ESTA_Id,
-						USUA_Id,
-						USUA_IdAuditoria,
-						INCI_FechaAuditoria)
+		$sql = "INSERT INTO tratamiento_incidencia(
+						TRIN_FechaRegistro, 
+						INCI_Id, 
+						CATE_Id, 
+						AREA_Id, 
+						NIVE_Id, 
+						ESTA_Id, 
+						PRIO_Id, 
+						USUA_IdResponsable, 
+						USUA_Id, 
+						TRIN_FechaAuditoria )
 						VALUES (
+						?,
+						?,
 						?,
 						?,
 						?,
@@ -163,14 +172,16 @@ public $TRIN_Id;
 		$this->pdo->prepare($sql)
 		     ->execute(
 				array(
-                        $data->INCI_Titulo, 
-                        $data->INCI_Descripcion,
-                        $data->INCI_FechaRegistro,                        
-                        $data->CATE_Id,
+                        $data->TRIN_FechaRegistro, 
+                        $data->INCI_Id,
+                        $data->CATE_Id,                        
+                        $data->AREA_Id,
+                        $data->NIVE_Id,
                         $data->ESTA_Id,
+                        $data->PRIO_Id,
+                        $data->USUA_IdResponsable,                      
                         $data->USUA_Id,
-                        $data->USUA_IdAuditoria,
-                        $data->INCI_FechaAuditoria                      
+                        $data->TRIN_FechaAuditoria
                 )
 			);
 		   $_SESSION['TipoVentanaEmergente']="success";
@@ -219,6 +230,9 @@ public $TRIN_Id;
 		}
 	}
 
+
+
+
 		public function SelectAreas()
 			{
 				try
@@ -259,6 +273,40 @@ public $TRIN_Id;
 												CATE_Id, 
 												CATE_Descripcion 
 												FROM categoria");
+					$stm->execute();
+
+					return $stm->fetchAll(PDO::FETCH_OBJ);
+				}
+				catch(Exception $e)
+				{
+					die($e->getMessage());
+				}
+			}
+
+
+/************************************************************************************
+* Descripción			: Creacion de la Funcion SelectCategorias					*
+* Fecha Creación		: 4/08/2017                                         		*
+* Fecha Modificación	: 13/08/2017  												*		
+* Parámetros			: 															*
+* Autor					:  Max Palli Uscamaita										*
+* Versión				: 1.0														*
+* Cambios Importantes	:                                                         	*
+*                                                                             		*                                        		                                                                           		*
+*************************************************************************************/
+			public function SelectUsuariosTecnicos()
+			{
+				try
+				{
+					$result = array();
+
+					$stm = $this->pdo->prepare("SELECT 
+												`USUA_Id` ,
+												`USUA_Nombre`
+												FROM 
+												`usuarios` 
+												WHERE 
+												`ROL_Id` = 2");  //Rol 2 es de Tecnicos
 					$stm->execute();
 
 					return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -378,7 +426,7 @@ public function SelectRol()
 *                                                                             		*                                        		                                                                           		*
 *************************************************************************************/
 
-	public function ListaIncidenciasRegistradas()
+	public function ListaIncidenciasEnviadas()
 	{
 		try
 		{
@@ -388,10 +436,13 @@ public function SelectRol()
 										INCI_Id, 
 										INCI_Titulo, 
 										INCI_FechaRegistro, 
-										C.CATE_Descripcion 
+										C.CATE_Descripcion,
+                                        E.ESTA_Nombre
 										from 
 										incidencias I
-										inner join categoria C on I.CATE_Id = C.CATE_Id");
+										INNER JOIN categoria C on I.CATE_Id = C.CATE_Id
+                                        INNER JOIN estados E on I.ESTA_Id = E.ESTA_Id
+                                        WHERE E.ESTA_Id = 1");
 			$stm->execute();
 
 			return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -432,6 +483,86 @@ public function Actualizar($data)
 							    array(
 			                        $data->INCI_Titulo, 
 			                        $data->CATE_Id		,
+			                        $data->INCI_Id		                      
+			                     )
+							);
+						$_SESSION['TipoVentanaEmergente']="success";
+					} catch (Exception $e) 
+					{
+						$_SESSION['TipoVentanaEmergente']="fail";
+						//die($e->getMessage());
+					}
+				}
+
+
+
+
+/************************************************************************************
+* Descripción			: Creacion de la Funcion Actualizar							*
+* Fecha Creación		: 4/08/2017                                         		*
+* Fecha Modificación	: 13/08/2017  												*		
+* Parámetros			: data: Recibe un objeto de tipo clase incidencias														*
+* Autor					:  Max Palli Uscamaita										*
+* Versión				: 1.0														*
+* Cambios Importantes	:                                                         	*
+*                                                                             		*                                        		                                                                           		*
+*************************************************************************************/
+
+public function CambiaEstadoIncidencia($data)
+
+				{
+
+					try 
+					{
+						$sql = "UPDATE  
+								incidencias
+								SET 
+								ESTA_Id = 4 
+								WHERE 
+								INCI_Id = ?";
+
+						$this->pdo->prepare($sql)
+						     ->execute(
+							    array(
+			                        $data->INCI_Id		                      
+			                     )
+							);
+						$_SESSION['TipoVentanaEmergente']="success";
+					} catch (Exception $e) 
+					{
+						$_SESSION['TipoVentanaEmergente']="fail";
+						//die($e->getMessage());
+					}
+				}
+
+
+/************************************************************************************
+* Descripción			: Creacion de la Funcion Actualizar							*
+* Fecha Creación		: 4/08/2017                                         		*
+* Fecha Modificación	: 13/08/2017  												*		
+* Parámetros			: data: Recibe un objeto de tipo clase incidencias														*
+* Autor					:  Max Palli Uscamaita										*
+* Versión				: 1.0														*
+* Cambios Importantes	:                                                         	*
+*                                                                             		*                                        		                                                                           		*
+*************************************************************************************/
+
+public function RechazarIncidencia($data)
+
+				{
+
+					try 
+					{
+						$sql = "UPDATE  
+								incidencias
+								SET 
+								ESTA_Id = 3 
+								WHERE 
+								INCI_Id = ?";
+
+						$this->pdo->prepare($sql)
+						     ->execute(
+							    array(
 			                        $data->INCI_Id		                      
 			                     )
 							);
