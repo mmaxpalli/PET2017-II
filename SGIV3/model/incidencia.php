@@ -57,7 +57,7 @@ public $TRIN_Id;
 *                                                                             		*                                        		                                                                           		*
 *************************************************************************************/
 
-	public function Obtener($id)
+public function Obtener($id)
 	{
 		try 
 		{
@@ -68,6 +68,7 @@ public $TRIN_Id;
 								    INCI_Descripcion,
 								    INCI_FechaRegistro,
 								    CATE_Id,
+                                    AREA_Id,
 								    ESTA_Id,
 								    USUA_Id,
 								    USUA_IdAuditoria,
@@ -82,7 +83,6 @@ public $TRIN_Id;
 			die($e->getMessage());
 		}
 	}
-
 
 /************************************************************************************
 * Descripción			: Creacion de la Funcion ObtenerTratamiento					*
@@ -160,7 +160,7 @@ public $TRIN_Id;
 						?)";
 
 
-		$this->pdo->prepare($sql)
+			$variable=$this->pdo->prepare($sql)
 		     ->execute(
 				array(
                         $data->INCI_Titulo, 
@@ -173,6 +173,8 @@ public $TRIN_Id;
                         $data->INCI_FechaAuditoria                      
                 )
 			);
+		      $lastId = $this->pdo->lastInsertId();
+		       return  $variable.'*'.$lastId;
 		   $_SESSION['TipoVentanaEmergente']="success";
 		} catch (Exception $e) 
 		{
@@ -383,15 +385,20 @@ public function SelectRol()
 		try
 		{
 			$result = array();
+			$usuario = $_SESSION['USUA_Id'];
 
-			$stm = $this->pdo->prepare("SELECT 
-										INCI_Id, 
-										INCI_Titulo, 
-										INCI_FechaRegistro, 
-										C.CATE_Descripcion 
-										from 
-										incidencias I
-										inner join categoria C on I.CATE_Id = C.CATE_Id");
+			$stm = $this->pdo->prepare(" SELECT 
+										    INCI_Id, 
+										    INCI_Titulo, 
+										    INCI_FechaRegistro, 
+										    C.CATE_Descripcion , 
+										    E.ESTA_Nombre 
+										    FROM 
+										    incidencias I 
+										    INNER JOIN 
+										    categoria C on I.CATE_Id = C.CATE_Id 
+										    INNER JOIN estados E ON I.ESTA_Id = E.ESTA_Id 
+										    WHERE I.USUA_Id = $usuario");
 			$stm->execute();
 
 			return $stm->fetchAll(PDO::FETCH_OBJ);
@@ -523,6 +530,55 @@ public function Actualizar($data)
 				die($e->getMessage());
 			}
 		}
+
+
+public function RegistrarResolucion(resolucion $data)
+{
+	try 
+	{
+		$sql = "INSERT INTO resolucion_incidencias(
+								INCI_Id,
+								REIN_FechaMovimiento,
+								REIN_TipoMovimiento ,
+								REIN_TipoSolucion ,
+								REIN_Notificado ,								
+								REIN_Descripcion,
+								USUA_Id,
+								REIN_FechaAuditoria )
+								VALUES (
+								?,
+								?,
+								?,
+								?,								
+								?,
+								?,
+								?,				
+								?)";
+
+
+		$variable=$this->pdo->prepare($sql)
+		->execute(
+			array(
+				$data->INCI_Id, 
+				$data->REIN_FechaMovimiento,
+				$data->REIN_TipoMovimiento,                        
+				$data->REIN_TipoSolucion,
+				$data->REIN_Notificado,				
+				$data->REIN_Descripcion,
+				$data->USUA_Id,                                              
+				$data->REIN_FechaAuditoria
+				)
+			);
+
+		
+
+		$_SESSION['TipoVentanaEmergente']="success";
+	} catch (Exception $e) 
+	{
+		$_SESSION['TipoVentanaEmergente']="fail";
+			//die($e->getMessage());
+	}
+}
 
 
 

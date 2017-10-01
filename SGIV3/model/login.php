@@ -150,6 +150,36 @@ class Login
 	}
 
 
+	public function BloquearCuenta($usuario)
+	{
+		try
+		{
+			$result = array();
+
+			$stm = $this->pdo->prepare("UPDATE
+											`usuarios` 
+											SET 
+											`USUA_Password` = 'BLOQUEADA'
+											WHERE `USUA_Nick` = ?");
+			$stm->execute(array($usuario));
+			//$Objeto= $stm->fetchAll(PDO::FETCH_OBJ);
+			//$count = $stm->rowCount();
+			//return $stm->fetchAll(PDO::FETCH_OBJ);
+			//if($count>0){
+				//return $stm->fetchAll(PDO::FETCH_OBJ);
+
+			//}
+			//else{
+			//	return $objeto=0;
+		//	}
+		}
+		catch(Exception $e)
+		{
+			die($e->getMessage());
+		}
+	}
+
+
 
 	public function Actualizar($data)
 	{

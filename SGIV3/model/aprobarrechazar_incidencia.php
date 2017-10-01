@@ -1,5 +1,8 @@
 <?php
-session_start();
+if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    }
 /************************************************************************************************
 * Descripción			: Creacion de la Incidencias areas donde se definen atributos y metodos *
 * Fecha Creación		: 4/08/2017                                         					*

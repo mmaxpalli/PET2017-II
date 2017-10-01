@@ -584,7 +584,7 @@ public function RechazarIncidencia($data)
 * Cambios Importantes	:                                                         	*
 *                                                                             		*                                        		                                                                           		*
 *************************************************************************************/
-				public function ActualizarEscalado($data)
+public function ActualizarEscalado($data)
 
 				{
 
@@ -626,34 +626,186 @@ public function RechazarIncidencia($data)
 *                                                                             		*                                        		                                                                           		*
 *************************************************************************************/
 
-	public function ListaIncidenciasEscalado()
-		{
-			try
-			{
-				$result = array();
+public function ListaIncidenciasParaCierre()
+{
+	try
+	{
+		$result = array();
+		$usuario = $_SESSION['USUA_Id'];
 
-				$stm = $this->pdo->prepare("SELECT 
-											TRIN_Id,
-											I.INCI_Titulo,
-											C.CATE_Descripcion,
-											A.AREA_Nombre,
-											N.NIVE_Nombre,
-											U.USUA_Nombre
-											FROM `tratamiento_incidencia` TI
-											INNER JOIN incidencias I ON TI.`INCI_Id` = I.`INCI_Id`
-											INNER JOIN categoria C ON TI.`CATE_Id` = C.`CATE_Id`
-											INNER JOIN areas A ON TI.`AREA_Id` = A.`AREA_Id`
-											INNER JOIN nivel N ON TI.`NIVE_Id` = N.`NIVE_Id`
-											INNER JOIN usuarios U ON TI.`USUA_Id` = U.`USUA_Id`");
-				$stm->execute();
+		$stm = $this->pdo->prepare("SELECT 
+										TR.TRIN_Id,
+										I.INCI_Id,
+										I.INCI_Titulo,
+										C.CATE_Descripcion,
+										CASE TR.PRIO_Id
+										WHEN 0 THEN 'Sencillo'
+										WHEN 1 THEN 'Bajo'
+										WHEN 2 THEN 'Medio'
+										WHEN 3 THEN 'Alto'
+										END AS 'Prioridad',
+							            E.ESTA_Nombre,
+										U.USUA_Nombre
+										FROM 
+										tratamiento_incidencia TR
+										INNER JOIN incidencias I ON TR.INCI_Id = I.INCI_Id
+										INNER JOIN categoria C ON TR.CATE_Id = C.CATE_Id
+										INNER JOIN usuarios U ON TR.USUA_IdResponsable = U.USUA_Id
+							            INNER JOIN estados E ON TR.ESTA_Id = E.ESTA_Id	
+							            WHERE 
+										TR.ESTA_Id <> 5"); //5 Codigo duro de CERRADO
+		$stm->execute();
 
-				return $stm->fetchAll(PDO::FETCH_OBJ);
-			}
-			catch(Exception $e)
+		return $stm->fetchAll(PDO::FETCH_OBJ);
+	}
+	catch(Exception $e)
+	{
+		die($e->getMessage());
+	}
+}
+
+public function ActualizarEstadoIncidencia($data)
+
+				{
+
+					
+					try 
+					{
+						$sql = "UPDATE  
+								`incidencias` 
+								SET 
+								`ESTA_Id` = 5
+								WHERE 
+								`INCI_Id` = ?";
+
+						$this->pdo->prepare($sql)
+						     ->execute(
+							    array(
+			                        $data->INCI_Id
+			                     )
+							);
+						$_SESSION['TipoVentanaEmergente']="success";
+					} catch (Exception $e) 
+					{
+						$_SESSION['TipoVentanaEmergente']="fail";
+						//die($e->getMessage());
+					}
+				}
+
+
+public function RegistrarResolucion(resolucion $data)
+{
+	try 
+	{
+		$sql = "INSERT INTO resolucion_incidencias(
+								INCI_Id,
+								REIN_FechaMovimiento,
+								REIN_TipoMovimiento ,
+								REIN_TipoSolucion ,
+								REIN_Notificado ,
+								TRIN_Id,
+								REIN_Descripcion,
+								USUA_Id,
+								REIN_FechaAuditoria )
+								VALUES (
+								?,
+								?,
+								?,
+								?,
+								?,
+								?,
+								?,
+								?,				
+								?)";
+
+
+		$this->pdo->prepare($sql)
+		->execute(
+			array(
+				$data->INCI_Id, 
+				$data->REIN_FechaMovimiento,
+				$data->REIN_TipoMovimiento,                        
+				$data->REIN_TipoSolucion,
+				$data->REIN_Notificado,
+				$data->TRIN_Id,
+				$data->REIN_Descripcion,
+				$data->USUA_Id,                                              
+				$data->REIN_FechaAuditoria
+				)
+			);
+		$_SESSION['TipoVentanaEmergente']="success";
+	} catch (Exception $e) 
+	{
+		$_SESSION['TipoVentanaEmergente']="fail";
+			//die($e->getMessage());
+	}
+}
+
+
+public function ActualizaTratamientoIncidencia($data)
+
+				{
+	
+					try 
+					{
+						$sql = "UPDATE  
+								`tratamiento_incidencia`
+								SET 
+								`ESTA_Id` = 5   
+								WHERE 
+								`TRIN_Id` = ?";
+
+						$this->pdo->prepare($sql)
+						     ->execute(
+							    array(
+			                        $data->TRIN_Id
+			                     )
+							);
+						$_SESSION['TipoVentanaEmergente']="success";
+					} catch (Exception $e) 
+					{
+						$_SESSION['TipoVentanaEmergente']="fail";
+						//die($e->getMessage());
+					}
+				}
+
+
+public function MostrarHistorialPorIncidencia($data)
 			{
-				die($e->getMessage());
+				try
+				{
+					$Codigo =  $data->INCI_Id;
+					$result = array();
+				
+
+					$stm = $this->pdo->prepare("SELECT 
+													REIN_Id,
+													INCI_Id,
+													REIN_FechaMovimiento,
+													REIN_TipoMovimiento,
+                                                    REIN_TipoSolucion,
+													CASE REIN_Notificado
+                                                    WHEN 0 THEN '-'
+                                                    WHEN 1 THEN 'SI'
+                                                    END AS REIN_Notificado,
+													REIN_Descripcion,
+													 U.USUA_Nombre
+													FROM resolucion_incidencias  RI
+													INNER JOIN usuarios U ON  RI.USUA_Id = U.USUA_Id
+													WHERE INCI_Id = $Codigo"); 
+					$stm->execute();
+
+					//return $stm->fetchAll(PDO::FETCH_OBJ);
+
+					//$stm->fetchAll(PDO::FETCH_OBJ);
+					return $result=$stm->fetchAll(PDO::FETCH_NUM);
+				}
+				catch(Exception $e)
+				{
+					die($e->getMessage());
+				}
 			}
-		}
+
 
 
 
