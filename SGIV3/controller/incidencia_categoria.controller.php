@@ -18,7 +18,7 @@ class incidencia_categoriaController{
     
     public function Index(){
         require_once 'view/header.php';
-        require_once 'view/incidencia_categoria/incidencia_categoria.php';
+        require_once 'view/incidencia_categoria/incidencia_categoria-editar.php';
         require_once 'view/footer.php';
     }
     

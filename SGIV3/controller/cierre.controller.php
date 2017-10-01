@@ -1,6 +1,8 @@
 <?php
 
 require_once 'model/cierre.php';
+require_once 'model/resolucion.php';
+require_once 'model/aprobarrechazar_incidencia.php';
 require_once 'model/incidencia.php';
 require_once 'model/herramientas.php';
 
@@ -26,13 +28,14 @@ class cierreController{
     public function __CONSTRUCT(){
         $this->model = new cierre();
         $this->herramientas = new herramientas();
+        $this->resolucion = new resolucion();
         $this->herramientas->LogearseValidador();
 
     }
     
     public function Index(){
         require_once 'view/header.php';
-        require_once 'view/incidencia/cierre_incidencia-editar.php';
+        require_once 'view/incidencia/cierre.php';
         require_once 'view/footer.php';
 
        
@@ -59,67 +62,64 @@ class cierreController{
 
       public function Guardar(){
 
-        $resolucion = new cierre();
-        $incidencia = new incidencia();
-        
+        $cierre = new cierre();
+        $resolucion = new resolucion();
+        $aprobarrechazar_incidencia  = new aprobarrechazar_incidencia();
+
+          $cierre->INCI_Id  = $_REQUEST['INCI_Id'];
 
 
-
-       if ($_POST['Guardar'])
-       {
           $resolucion->INCI_Id                = $_REQUEST['INCI_Id'];
-          $resolucion->REIN_FechaMovimiento   = $_REQUEST['REIN_FechaMovimiento'];
-          $resolucion->REIN_TipoMovimiento    = $_REQUEST['REIN_TipoMovimiento'];
-          $resolucion->REIN_TipoSolucion      = $_REQUEST['REIN_TipoSolucion'];        
+          $resolucion->REIN_FechaMovimiento   = date("Y,m,d");
+          $resolucion->REIN_TipoMovimiento    = 'Cierre de incidencia';
+          $resolucion->REIN_TipoSolucion      = 'Ninguna';        
           $resolucion->REIN_Notificado        = 0;
           $resolucion->TRIN_Id                = $_REQUEST['TRIN_Id'];
-          $resolucion->REIN_Descripcion       = $_REQUEST['REIN_Descripcion'];
-          $resolucion->USUA_Id                = $_REQUEST['USUA_Id'];
-          $resolucion->REIN_FechaAuditoria    = $_REQUEST['REIN_FechaAuditoria'];
-       }
-       if ($_POST['Rechazar'])
-       {
-         $resolucion->INCI_Id                = $_REQUEST['INCI_Id'];
-         $resolucion->REIN_FechaMovimiento   = $_REQUEST['REIN_FechaMovimiento'];
-         $resolucion->REIN_TipoMovimiento    = $_REQUEST['REIN_TipoMovimiento'];
-         $resolucion->REIN_TipoSolucion      = "Ninguno";        
-         $resolucion->REIN_Notificado        = 0;
-         $resolucion->TRIN_Id                = $_REQUEST['TRIN_Id'];
-         $resolucion->REIN_Descripcion       = "Operador indica que no puede resolver la incidencia Reclasificar"."-".$_REQUEST['REIN_Descripcion'];
-         $resolucion->USUA_Id                = $_REQUEST['USUA_Id'];
-         $resolucion->REIN_FechaAuditoria    = $_REQUEST['REIN_FechaAuditoria']; 
+          $resolucion->REIN_Descripcion       = 'La incidencia ha sido cerrada';
+          $resolucion->USUA_Id                = $_SESSION['USUA_Id'];
+          $resolucion->REIN_FechaAuditoria    = date("Y,m,d h:i:s");
+         
+          $aprobarrechazar_incidencia->TRIN_Id     = $_REQUEST['TRIN_Id'];
 
-       }
-       if ($_POST['Notificar'])
-       {
-        $resolucion->INCI_Id                = $_REQUEST['INCI_Id'];
-        $resolucion->REIN_FechaMovimiento   = $_REQUEST['REIN_FechaMovimiento'];
-        $resolucion->REIN_TipoMovimiento    = $_REQUEST['REIN_TipoMovimiento'];
-        $resolucion->REIN_TipoSolucion      = $_REQUEST['REIN_TipoSolucion'];        
-        $resolucion->REIN_Notificado        = 1;
-        $resolucion->TRIN_Id                = $_REQUEST['TRIN_Id'];
-        $resolucion->REIN_Descripcion       = $_REQUEST['REIN_Descripcion']."Operador solicita cierre";
-        $resolucion->USUA_Id                = $_REQUEST['USUA_Id'];
-        $resolucion->REIN_FechaAuditoria    = $_REQUEST['REIN_FechaAuditoria'];
-       }
+      
 
-         $this->model->Registrar($resolucion);
+          $this->model->ActualizarEstadoIncidencia($cierre);
+          $this->model->RegistrarResolucion($resolucion);
+          $this->model->ActualizaTratamientoIncidencia($aprobarrechazar_incidencia);
+
+
+
     //  $this->model->CambiaEstadoIncidencia($incidencia);
             
-         header('Location: index.php?c=resolucion');
+         header('Location: index.php?c=cierre');
       
     }
 
+      public function TablaModalHistorial()
+    {
+        try
+        {   
 
-    public function RechazarIncidencia(){
 
-        $incidencia = new incidencia();
 
-        $incidencia->INCI_Id = $_REQUEST['INCI_Id'];
+        $cierre  =  new cierre();
+         $cierre->INCI_Id  = $_REQUEST['INCI_Id'];
 
-        $this->model->RechazarIncidencia($incidencia);
-         header('Location: index.php?c=aprobarrechazar_incidencia');
+        $Listado = $cierre->MostrarHistorialPorIncidencia($cierre);
+
+        echo json_encode($Listado);
+
+        }
+
+        catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
     }
+
+
+
+   
 
     
 }

@@ -44,7 +44,7 @@ class resolucionController{
         }
         
         require_once 'view/header.php';
-        require_once 'view/incidencia/Resolucion_Incidencia-editar.php';
+        require_once 'view/incidencia/Resolucion_incidencia-editar.php';
         require_once 'view/footer.php';
     }
 

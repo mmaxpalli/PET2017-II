@@ -93,7 +93,30 @@ class LoginController{
                // header('Location:index.php?c=login');
             }
 
+        }
 
+
+
+    public function VerificarIntentos(){
+
+            
+            $_SESSION['Intentos']+=1;
+
+              if ($_SESSION['Intentos'] < 4) {
+                 $IntentoNumero = $_SESSION['Intentos'] ;          
+                  echo $IntentoNumero; 
+              }
+              else{
+
+                 echo "5"; 
+                 unset($_SESSION['Intentos']);
+                 $_SESSION['Intentos'] = 0;
+              $this->model-> BloquearCuenta($_REQUEST['usuario']);
+                 //header('Location:index.php?c=login');
+              }
+
+                
+                
     }
 
 
