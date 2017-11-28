@@ -1,0 +1,32 @@
+2017-11-14T00:19:58+01:00 categoria INFO  Error al insertar en la Tabla Categoria
+2017-11-14T00:19:58+01:00 categoria ERROR exception 'PDOException' with message 'SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens' in C:\xampp\htdocs\TesisIncidencias\model\categoria.php:64
+Stack trace:
+#0 C:\xampp\htdocs\TesisIncidencias\model\categoria.php(64): PDOStatement->execute()
+#1 C:\xampp\htdocs\TesisIncidencias\controller\categoria.controller.php(63): categoria->RegistrarCategoria(Object(categoria))
+#2 [internal function]: categoriaController->RegistrarCategoria()
+#3 C:\xampp\htdocs\TesisIncidencias\index.php(27): call_user_func(Array)
+#4 {main}
+2017-11-14T00:21:04+01:00 categoria INFO  Error al insertar en la Tabla Categoria
+2017-11-14T00:21:04+01:00 categoria ERROR exception 'PDOException' with message 'SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens' in C:\xampp\htdocs\TesisIncidencias\model\categoria.php:64
+Stack trace:
+#0 C:\xampp\htdocs\TesisIncidencias\model\categoria.php(64): PDOStatement->execute()
+#1 C:\xampp\htdocs\TesisIncidencias\controller\categoria.controller.php(63): categoria->RegistrarCategoria(Object(categoria))
+#2 [internal function]: categoriaController->RegistrarCategoria()
+#3 C:\xampp\htdocs\TesisIncidencias\index.php(27): call_user_func(Array)
+#4 {main}
+2017-11-14T00:26:58+01:00 incidencia INFO  Error al insertar en la Tabla Categoria
+2017-11-14T00:26:58+01:00 incidencia ERROR exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'CATE_Id' cannot be null' in C:\xampp\htdocs\TesisIncidencias\model\incidencia.php:154
+Stack trace:
+#0 C:\xampp\htdocs\TesisIncidencias\model\incidencia.php(154): PDOStatement->execute(Array)
+#1 C:\xampp\htdocs\TesisIncidencias\controller\incidencia.controller.php(127): incidencia->RegistrarIncidencia(Object(incidencia))
+#2 [internal function]: incidenciaController->RegistrarIncidencia()
+#3 C:\xampp\htdocs\TesisIncidencias\index.php(30): call_user_func(Array)
+#4 {main}
+2017-11-14T00:27:14+01:00 categoria INFO  Error al insertar en la Tabla Categoria
+2017-11-14T00:27:14+01:00 categoria ERROR exception 'PDOException' with message 'SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens' in C:\xampp\htdocs\TesisIncidencias\model\categoria.php:64
+Stack trace:
+#0 C:\xampp\htdocs\TesisIncidencias\model\categoria.php(64): PDOStatement->execute()
+#1 C:\xampp\htdocs\TesisIncidencias\controller\categoria.controller.php(63): categoria->RegistrarCategoria(Object(categoria))
+#2 [internal function]: categoriaController->RegistrarCategoria()
+#3 C:\xampp\htdocs\TesisIncidencias\index.php(30): call_user_func(Array)
+#4 {main}
